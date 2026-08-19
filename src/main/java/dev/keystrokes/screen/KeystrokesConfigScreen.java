@@ -447,13 +447,13 @@ public boolean mouseDragged(Click click, double deltaX, double deltaY) {
 }
 
     @Override
-public boolean mouseReleased(Click click, boolean doubled) {
+public boolean mouseReleased(Click click) {
     if (draggingPreview) {
         draggingPreview = false;
         cfg.save();
         return true;
     }
-    return super.mouseReleased(click, doubled);
+    return super.mouseReleased(click);
 }
 
     private boolean isInsidePreview(double mouseX, double mouseY) {
