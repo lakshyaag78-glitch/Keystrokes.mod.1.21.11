@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.option.KeyBinding.Category;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
@@ -20,7 +21,8 @@ import org.lwjgl.glfw.GLFW;
 public final class KeystrokesClient implements ClientModInitializer {
 
     public static final String MOD_ID = "keystrokes";
-
+    
+private static final Category KEY_CATEGORY = Category.register(Identifier.of(MOD_ID, "keystrokes"));
     private static KeyBinding openConfigKey;
 
     @Override
@@ -33,7 +35,7 @@ public final class KeystrokesClient implements ClientModInitializer {
                 "key.keystrokes.open_config",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN, // unbound by default; player assigns one in Controls
-                "key.categories.keystrokes"
+                KEY_CATEGORY
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
