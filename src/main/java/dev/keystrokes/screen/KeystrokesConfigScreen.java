@@ -14,7 +14,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
-
+import net.minecraft.client.gui.Click;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -412,15 +412,17 @@ public final class KeystrokesConfigScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button == 0 && isInsidePreview(mouseX, mouseY) && !isOverAnyChild(mouseX, mouseY)) {
-            draggingPreview = true;
-            dragOffsetX = mouseX - cfg.hudX;
-            dragOffsetY = mouseY - cfg.hudY;
-            return true;
-        }
-        return super.mouseClicked(mouseX, mouseY, button);
+public boolean mouseClicked(Click click, boolean doubled) {
+    double mouseX = click.x();
+    double mouseY = click.y();
+    if (click.button() == 0 && isInsidePreview(mouseX, mouseY) && !isOverAnyChild(mouseX, mouseY)) {
+        draggingPreview = true;
+        dragOffsetX = mouseX - cfg.hudX;
+        dragOffsetY = mouseY - cfg.hudY;
+        return true;
     }
+    return super.mouseClicked(click, doubled);
+}
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
@@ -443,14 +445,14 @@ public final class KeystrokesConfigScreen extends Screen {
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        if (draggingPreview) {
-            draggingPreview = false;
-            cfg.save();
-            return true;
-        }
-        return super.mouseReleased(mouseX, mouseY, button);
+public boolean mouseReleased(Click click, boolean doubled) {
+    if (draggingPreview) {
+        draggingPreview = false;
+        cfg.save();
+        return true;
     }
+    return super.mouseReleased(click, doubled);
+}
 
     private boolean isInsidePreview(double mouseX, double mouseY) {
         KeyLayout.Result layout = currentLayout();
