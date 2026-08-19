@@ -197,7 +197,7 @@ public final class KeystrokesConfigScreen extends Screen {
         y = addColorField(x, y, "Pressed Text Color (hex)", cfg.textPressedColor, v -> cfg.textPressedColor = v);
         y = addSlider(x, y, "Text Size: ", "x", 50, 200, cfg.textSize * 100.0, v -> cfg.textSize = (float) (v / 100.0));
 
-        this.addDrawableChild(CyclingButtonWidget.<KeystrokesConfig.TextAlign>builder(a -> Text.literal(capitalize(a.name())))
+        this.addDrawableChild(CyclingButtonWidget.<KeystrokesConfig.TextAlign>builder(a -> Text.literal(capitalize(a.name())), () -> KeystrokesConfig.TextAlign.values()[0])
                 .values(KeystrokesConfig.TextAlign.values())
                 .initially(cfg.textAlign)
                 .build(x, y, widgetWidth(), 20, Text.literal("Text Align"), (btn, val) -> {
@@ -214,7 +214,7 @@ public final class KeystrokesConfigScreen extends Screen {
         int y = CONTENT_TOP;
 
         y = section(y, "MOTION PROFILE");
-        this.addDrawableChild(CyclingButtonWidget.<AnimationProfile>builder(p -> Text.literal(p.displayName()))
+        this.addDrawableChild(CyclingButtonWidget.<AnimationProfile>builder(p -> Text.literal(p.displayName()), () -> AnimationProfile.values()[0])
                 .values(AnimationProfile.values())
                 .initially(cfg.animationProfile)
                 .build(x, y, widgetWidth(), 20, Text.literal("Profile"), (btn, val) -> {
