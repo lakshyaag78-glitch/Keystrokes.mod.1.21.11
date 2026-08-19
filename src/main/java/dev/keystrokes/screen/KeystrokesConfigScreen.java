@@ -425,24 +425,26 @@ public boolean mouseClicked(Click click, boolean doubled) {
 }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        if (draggingPreview) {
-            KeyLayout.Result layout = currentLayout();
-            float bw = layout.width;
-            float bh = layout.height;
-            float newX = (float) (mouseX - dragOffsetX);
-            float newY = (float) (mouseY - dragOffsetY);
-            // Keep at least a sliver of the HUD on screen at all times, from every edge/corner.
-            float minVisible = 12f;
-            newX = Math.max(minVisible - bw, Math.min(newX, this.width - minVisible));
-            newY = Math.max(minVisible - bh, Math.min(newY, this.height - minVisible));
-            cfg.hudX = newX;
-            cfg.hudY = newY;
-            cfg.requestSave();
-            return true;
-        }
-        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+public boolean mouseDragged(Click click, double deltaX, double deltaY) {
+    if (draggingPreview) {
+        double mouseX = click.x();
+        double mouseY = click.y();
+        KeyLayout.Result layout = currentLayout();
+        float bw = layout.width;
+        float bh = layout.height;
+        float newX = (float) (mouseX - dragOffsetX);
+        float newY = (float) (mouseY - dragOffsetY);
+        // Keep at least a sliver of the HUD on screen at all times, from every edge/corner.
+        float minVisible = 12f;
+        newX = Math.max(minVisible - bw, Math.min(newX, this.width - minVisible));
+        newY = Math.max(minVisible - bh, Math.min(newY, this.height - minVisible));
+        cfg.hudX = newX;
+        cfg.hudY = newY;
+        cfg.requestSave();
+        return true;
     }
+    return super.mouseDragged(click, deltaX, deltaY);
+}
 
     @Override
 public boolean mouseReleased(Click click, boolean doubled) {
